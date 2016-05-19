@@ -6,7 +6,7 @@ This is a Script Written by: Unknown
 I found it on the Web a year ago and hjust modified it for fitting in Our environment
 ****
 
-####Function:
+#####Hunction:
 When Ethernet cable is plugged in Wi-Fi is disabled. When Cable is disconnected Wi-Fi will turn on again.
 
 #####Hot to Use:
@@ -19,7 +19,7 @@ com.mine.switchinterface.plist should be copied to /Library/LaunchAgents/
 Service must be load with sudo launchctl load /Library/LaunchAgents/com.mine.switchinterface.plist
 
 
-####Work on:
+#####HWorks on:
 tested and working on MBP 13" Retina and MBP 15" Non-Retina.
 Not working on iMac.
 
