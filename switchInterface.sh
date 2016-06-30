@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#MODEL=`sysctl hw.model | awk {'print $2'}
+##MODEL=`sysctl hw.model | awk {'print $2'}
 
 MODEL=`sysctl hw.model|sed "s/.*[a-z]//"|sed "s/,.*//"`
 
