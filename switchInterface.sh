@@ -2,26 +2,26 @@
 
 ##MODEL=`sysctl hw.model | awk {'print $2'}
 
-MODEL=`sysctl hw.model|sed "s/.*[a-z]//"|sed "s/,.*//"`
+MODEL=$(sysctl hw.model|sed "s/.*[a-z]//"|sed "s/,.*//")
 
-echo ${MODEL}
+echo "${MODEL}"
 
 if [ ${MODEL} -ge 11 ]
 
-	then 
+	then
 
-	function set_airport {
+set_airport() {
 
     new_status=$1
 
     if [ $new_status = "On" ]; then
-	/usr/sbin/networksetup -setairportpower en0 on
-	touch /var/tmp/prev_air_on
+				/usr/sbin/networksetup -setairportpower en0 on
+				touch /var/tmp/prev_air_on
     else
-	/usr/sbin/networksetup -setairportpower en0 off
-	if [ -f "/var/tmp/prev_air_on" ]; then
-	    rm /var/tmp/prev_air_on
-	fi
+				/usr/sbin/networksetup -setairportpower en0 off
+				if [ -f "/var/tmp/prev_air_on" ]; then
+	    		rm /var/tmp/prev_air_on
+				fi
     fi
 
 }
@@ -51,7 +51,7 @@ if [ "`ifconfig en3 2> /dev/null| grep \"status: active\"`" != "" ]; then
 fi
 
 # And actual current AirPort status
-air_status=`/usr/sbin/networksetup -getairportpower en0 | awk '{ print $4 }'`
+air_status=$(/usr/sbin/networksetup -getairportpower en0 | awk '{ print $4 }')
 
 
 # Determine whether ethernet status changed
@@ -88,25 +88,25 @@ if [ "$eth_status" == "On" ]; then
     touch /var/tmp/prev_eth_on
 else
     if [ -f "/var/tmp/prev_eth_on" ]; then
-	rm /var/tmp/prev_eth_on
+			rm /var/tmp/prev_eth_on
     fi
 fi
 
 
 	else
-	
-	function set_airport {
+
+	set_airport() {
 
     new_status=$1
 
     if [ $new_status = "On" ]; then
-	/usr/sbin/networksetup -setairportpower en1 on
-	touch /var/tmp/prev_air_on
+			/usr/sbin/networksetup -setairportpower en1 on
+			touch /var/tmp/prev_air_on
     else
-	/usr/sbin/networksetup -setairportpower en1 off
-	if [ -f "/var/tmp/prev_air_on" ]; then
-	    rm /var/tmp/prev_air_on
-	fi
+			/usr/sbin/networksetup -setairportpower en1 off
+			if [ -f "/var/tmp/prev_air_on" ]; then
+	    	rm /var/tmp/prev_air_on
+			fi
     fi
 
 }
@@ -136,7 +136,7 @@ if [ "`ifconfig en0 | grep \"status: active\"`" != "" ]; then
 fi
 
 # And actual current AirPort status
-air_status=`/usr/sbin/networksetup -getairportpower en1 | awk '{ print $4 }'`
+air_status=$(/usr/sbin/networksetup -getairportpower en1 | awk '{ print $4 }')
 
 
 # Determine whether ethernet status changed
@@ -156,7 +156,7 @@ else
     # Check whether AirPort status changed
     # If so it was done manually by user
     if [ "$prev_air_status" != "$air_status" ]; then
-	set_airport $air_status
+	set_airport "$air_status"
 
 #	if [ "$air_status" = "On" ]; then
 #	    growl "AirPort manually turned on."
@@ -169,7 +169,7 @@ else
 fi
 
 # Update ethernet status
-if [ "$eth_status" == "On" ]; then
+if [[ "$eth_status" == "On" ]]; then
     touch /var/tmp/prev_eth_on
 else
     if [ -f "/var/tmp/prev_eth_on" ]; then
